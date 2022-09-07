@@ -5,29 +5,74 @@
             <v-card>
                 <v-container>
                     <!--{{pokemons}}  Para mostrar todo los datos del json medainte el arreglo pokemons --> 
+                    <v-text-field
+                        v-model="search"
+                        label="Buscar Pokemon"
+                        placeholder="Pikachu"
+                        prepend-icon="mdi-magnify"
+                        clearable
+                    ></v-text-field>                   
                     <v-row>
                         <v-col 
-                        v-for="pokemon in pokemons.slice(0,150)" :key="pokemon.name"
-                        cols="2"> 
-                        <v-card>
+                            v-for="pokemon in filteredPokemons" :key="pokemon.name"
+                            cols="2">
+                            <!--v-for="pokemon in pokemons" :key="pokemon.name"-->
+                            <v-hover
+                                v-slot="{ hover }"
+                                close-delay="200"> 
+                                <!--Al hacer click en el v-card llama el dialogo showDescriptionPokemon-->
+                            <v-card 
+                                :elevation="hover ? 12 : 2"
+                                @click="showDescriptionPokemon = !showDescriptionPokemon"
+                                >
                                 {{ get_id(pokemon) }}
-                            <v-container>
-                                <v-row clas="mx-0 d-flex justify-center">
-                                    <img 
-                                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(pokemon)}.png`" 
-                                    :alt="pokemon.name"
-                                    width="90%" 
-                                    />
-                                </v-row>
-                                <h2 class="text-center"> {{ pokemon.name }} </h2>
-                            </v-container>
-                        </v-card>
-
+                                
+                                <v-container>
+                                    <v-row class="mx-0 d-flex justify-center">
+                                        <img 
+                                            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${get_id(pokemon)}.png`" 
+                                            :alt="pokemon.name"
+                                            width="80%" 
+                                            />
+                                    </v-row>
+                                <h2 class="text-center"> {{ getName(pokemon) }} </h2>
+                                </v-container>
+                            </v-card>
+                            </v-hover>
                         </v-col>
                     </v-row>
                 </v-container>
             </v-card>
         </v-container>
+        <!--Ventana para mostrar la description del pokemon-->
+        <v-dialog
+         v-model="showDescriptionPokemon"
+         width="500"
+        >
+
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-2">
+            POKEMON 
+        </v-card-title>
+
+            <v-container>
+                Hola mundo
+            </v-container>
+        
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="showDescriptionPokemon = false"
+          >
+            Aceptar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-app>
 </template>
 
@@ -40,13 +85,23 @@ import axios from 'axios';
 
         data() {
             return{
-                pokemons: []
+                pokemons: [],
+                search: '',
+                showDescriptionPokemon: false,
             }
         },
 
+        computed: {
+            filteredPokemons(){
+                return this.pokemons.filter((item) => {
+                    return item.name.includes(this.search);
+                });
+            },
+        },
+
         mounted() {
-            axios.get('https://pokeapi.co/api/v2/pokemon?limit=150').then((response) => {
-                this.pokemons = response.data.results;    
+            axios.get('https://pokeapi.co/api/v2/pokemon?limit=100').then((response) => {
+                this.pokemons = response.data.results; 
             })
         },
 
@@ -54,6 +109,10 @@ import axios from 'axios';
             get_id(pokemon){
                 return Number(pokemon.url.split("/")[6]); 
             },
+            getName(pokemon){
+                return pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+            },
+
         },
     };
 </script>
