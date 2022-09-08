@@ -23,7 +23,7 @@
                                 <!--Al hacer click en el v-card llama el dialogo showDescriptionPokemon-->
                             <v-card 
                                 :elevation="hover ? 12 : 2"
-                                @click="showDescriptionPokemon = !showDescriptionPokemon"
+                                @click="showPokemon(get_id(pokemon))"
                                 >
                                 {{ get_id(pokemon) }}
                                 
@@ -52,11 +52,13 @@
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-            POKEMON.NAME
+            {{getName(selectPokemon)}}
         </v-card-title>
 
             <v-container>
                 Pokemon arrecho
+
+                {{selectPokemon.weight}}
             </v-container>
         
         <v-divider></v-divider>
@@ -89,6 +91,7 @@ import axios from 'axios';
                 pokemons: [],
                 search: '',
                 showDescriptionPokemon: false,
+                selectPokemon: {name: 'pokemon is no found'},
             }
         },
 
@@ -101,7 +104,8 @@ import axios from 'axios';
         },
 
         mounted() {
-            axios.get('https://pokeapi.co/api/v2/pokemon?limit=100').then((response) => {
+            axios.get('https://pokeapi.co/api/v2/pokemon?limit=100')
+            .then((response) => {
                 this.pokemons = response.data.results; 
             })
         },
@@ -112,6 +116,15 @@ import axios from 'axios';
             },
             getName(pokemon){
                 return pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+            },
+            showPokemon(id){
+                axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                .then((response) => {
+                    this.selectPokemon = response.data;
+                    console.log(response.data);
+                    this.showDescriptionPokemon = !this.showDescriptionPokemon;
+                })
+
             },
 
         },
