@@ -52,11 +52,11 @@
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-            POKEMON 
+            POKEMON.NAME
         </v-card-title>
 
             <v-container>
-                Hola mundo
+                Pokemon arrecho
             </v-container>
         
         <v-divider></v-divider>
@@ -73,6 +73,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!-- Descripcion dialogo ventana-->
     </v-app>
 </template>
 
