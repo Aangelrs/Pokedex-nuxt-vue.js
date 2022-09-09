@@ -5,6 +5,8 @@
             <v-card>
                 <v-container>
                     <!--{{pokemons}}  Para mostrar todo los datos del json medainte el arreglo pokemons --> 
+
+                    <!--Buscador de pokemon llamando search-->
                     <v-text-field
                         v-model="search"
                         label="Buscar Pokemon"
