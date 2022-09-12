@@ -37,7 +37,9 @@
                                             width="80%" 
                                             />
                                     </v-row>
-                                <h2 class="text-center"> {{ getName(pokemon) }} </h2>
+                                    <v-row justify="center">
+                                        <h2 class="text-center"> {{ getName(pokemon) }} </h2>
+                                    </v-row>
                                 </v-container>
                             </v-card>
                             </v-hover>
@@ -49,17 +51,46 @@
         <!--Ventana para mostrar la description del pokemon-->
         <v-dialog
          v-model="showDescriptionPokemon"
-         width="500"
+         width="700"
         >
 
-      <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
+        <v-card 
+        v-if="selectPokemon"
+        shaped >
+
+        <v-card-title class="text-h4 grey darken-1 justify-center">
             {{getName(selectPokemon)}}
         </v-card-title>
 
             <v-container>
+                <v-row>
+                    
+                    <v-col cols="4">
+                        <img 
+                            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectPokemon.id}.png`" 
+                            :alt="selectPokemon.name"
+                            width="80%" 
+                        />
+                    </v-col>
+                    <v-col cols="8">
+                        <v-chip >
+                            Altura: {{ (selectPokemon.height / 10).toFixed(1) }} m
+                        </v-chip>
+                        <v-chip class="ml-2">
+                            Peso: {{ (selectPokemon.weight / 10).toFixed(1) }} kg
+                        </v-chip>
+                        <v-divider class="my-4"></v-divider>
+                        <v-chip 
+                            v-for="typePoke in selectPokemon.types" 
+                            :key="typePoke.slot"
+                            label 
+                            class="mr-2"> <!--Mostrar nombre es typePoke.type.name-->
+                            {{ getName(typePoke.type) }}
+                        </v-chip>
+                    </v-col>
+                </v-row>
                 Pokemon arrecho
-
+                {{ selectPokemon.id }} ID
                 {{selectPokemon.weight}}
             </v-container>
         
@@ -93,7 +124,7 @@ import axios from 'axios';
                 pokemons: [],
                 search: '',
                 showDescriptionPokemon: false,
-                selectPokemon: {name: 'pokemon is no found'},
+                selectPokemon: null,
             }
         },
 
