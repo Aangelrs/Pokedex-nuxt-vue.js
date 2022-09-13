@@ -64,9 +64,8 @@
 
             <v-container>
                 <v-row>
-                    
                     <v-col cols="4">
-                        <img 
+                        <img
                             :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectPokemon.id}.png`" 
                             :alt="selectPokemon.name"
                             width="80%" 
@@ -89,7 +88,32 @@
                         </v-chip>
                     </v-col>
                 </v-row>
-                Pokemon arrecho
+
+                <h2>Moves</h2>
+
+                <v-simple-table>
+                    <template>
+                      <thead>
+                        <tr>
+                          <th class="text-left">
+                            Level
+                          </th>
+                          <th class="text-left">
+                            Name
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="item in filterMoves(selectPokemon)" :key="item.move.name"
+                        >
+                          <td>{{ 0 }}</td>
+                          <td>{{ getName(item.move) }}</td>
+                        </tr>
+                      </tbody>
+                    </template>
+                </v-simple-table>
+
                 {{ selectPokemon.id }} ID
                 {{selectPokemon.weight}}
             </v-container>
@@ -159,6 +183,20 @@ import axios from 'axios';
                 })
 
             },
+            filterMoves(pokemon) {
+                
+                 // eslint-disable-next-line array-callback-return
+                 return pokemon.moves.filter((item) => {
+                        let include = false;
+                    for(const version of item.version_group_details){
+                       if(version.version_group.name === "sword-shield" && version.move_learn_method.name !== "machine"){
+                         include = true;
+                       }
+                    }
+                return include;        
+            })
+            },
+
 
         },
     };
