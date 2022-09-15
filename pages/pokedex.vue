@@ -88,18 +88,17 @@
                         </v-chip>
                     </v-col>
                 </v-row>
-
-                <h2>Moves</h2>
+                <v-container >
+                <h2>Habilidades</h2>
 
                 <v-simple-table>
-                    <template>
                       <thead>
                         <tr>
                           <th class="text-left">
-                            Level
+                            Nivel
                           </th>
                           <th class="text-left">
-                            Name
+                            Nombre
                           </th>
                         </tr>
                       </thead>
@@ -107,13 +106,13 @@
                         <tr
                           v-for="item in filterMoves(selectPokemon)" :key="item.move.name"
                         >
-                          <td>{{ 0 }}</td>
+                        <td>{{ getLevelMove(item) }}</td>
+                           <!--item.move.name-->
                           <td>{{ getName(item.move) }}</td>
                         </tr>
                       </tbody>
-                    </template>
                 </v-simple-table>
-
+                </v-container>
                 {{ selectPokemon.id }} ID
                 {{selectPokemon.weight}}
             </v-container>
@@ -189,15 +188,21 @@ import axios from 'axios';
                  return pokemon.moves.filter((item) => {
                         let include = false;
                     for(const version of item.version_group_details){
-                       if(version.version_group.name === "sword-shield" && version.move_learn_method.name !== "machine"){
+                       if(version.version_group.name === "sword-shield" && version.move_learn_method.name === "level-up"){
                          include = true;
                        }
                     }
                 return include;        
-            })
+            });
             },
-
-
+            getLevelMove(move){
+                for(const version of move.version_group_details){
+                    if(version.version_group.name === "sword-shield" && version.move_learn_method.name === "level-up"){
+                         return version.level_learned_at;
+                       }
+                }
+                return 0;
+            },
         },
     };
 </script>
