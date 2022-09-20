@@ -72,7 +72,7 @@
                         />
                     </v-col>
                     <v-col cols="8">
-                        <v-chip >
+                        <v-chip color="red" >
                             Altura: {{ (selectPokemon.height / 10).toFixed(1) }} m
                         </v-chip>
                         <v-chip class="ml-2">
@@ -83,7 +83,8 @@
                             v-for="typePoke in selectPokemon.types" 
                             :key="typePoke.slot"
                             label 
-                            class="mr-2"> <!--Mostrar nombre es typePoke.type.name-->
+                            class="mr-2"
+                            :color=getColorType(typePoke.type.name)> <!--Mostrar nombre es typePoke.type.name-->
                             {{ getName(typePoke.type) }}
                         </v-chip>
                     </v-col>
@@ -91,7 +92,15 @@
                 <v-container >
                 <h2>Habilidades</h2>
 
-                <v-simple-table>
+                
+                <v-expansion-panels>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>
+        Movimientos
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <v-simple-table>
                       <thead>
                         <tr>
                           <th class="text-left">
@@ -112,6 +121,9 @@
                         </tr>
                       </tbody>
                 </v-simple-table>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
                 </v-container>
                 {{ selectPokemon.id }} ID
                 {{selectPokemon.weight}}
@@ -183,7 +195,7 @@ import axios from 'axios';
 
             },
             filterMoves(pokemon) {
-                
+            
                  // eslint-disable-next-line array-callback-return
                  return pokemon.moves.filter((item) => {
                         let include = false;
@@ -202,6 +214,38 @@ import axios from 'axios';
                        }
                 }
                 return 0;
+            },
+            getColorType(type){
+                console.log(type);
+                switch (type){
+                    case 'fire':
+                        return 'red';
+                    case 'water':
+                        return 'blue darken-1';
+                    case 'grass':
+                        return 'green darkeen-1';
+                    case 'poison':
+                        return 'deep-purple lighten-2'
+                    case 'flying':
+                        return 'blue lighten-3';
+                    case 'bug':
+                        return 'lime darken-1';
+                    case 'electric':
+                        return 'yellow darken-1';
+                    case 'ground':
+                        return 'brown darken-2';
+                    case 'fairy':
+                        return 'pink lighten-3';
+                    case 'psychic':
+                        return 'pink darken-1';
+                    case 'fighting':
+                        return 'orange darken-3';
+                    default: 
+                     return 'grey lighten-1';
+                }
+            },
+            test(test){
+                console.log(test);
             },
         },
     };
