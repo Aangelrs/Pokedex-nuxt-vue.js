@@ -64,15 +64,22 @@
 
             <v-container>
                 <v-row>
-                    <v-col cols="4">
-                        <img
-                            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectPokemon.id}.png`" 
-                            :alt="selectPokemon.name"
-                            width="80%" 
-                        />
+                    <v-col cols="4"> 
+                        <v-card 
+                            justify="center"
+                            :img=backgroundPoke
+                                >
+                            <v-row justify="center">
+                            <img
+                                :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectPokemon.id}.png`" 
+                                :alt="selectPokemon.name"
+                                width="80%" 
+                            />
+                        </v-row>
+                        </v-card>
                     </v-col>
                     <v-col cols="8">
-                        <v-chip color="red" >
+                        <v-chip>
                             Altura: {{ (selectPokemon.height / 10).toFixed(1) }} m
                         </v-chip>
                         <v-chip class="ml-2">
@@ -160,6 +167,7 @@ import axios from 'axios';
                 search: '',
                 showDescriptionPokemon: false,
                 selectPokemon: null,
+                backgroundPoke: '',
             }
         },
 
@@ -219,27 +227,52 @@ import axios from 'axios';
                 console.log(type);
                 switch (type){
                     case 'fire':
+                        this.backgroundPoke='background.png'
                         return 'red';
                     case 'water':
+                        this.backgroundPoke='background.png'
                         return 'blue darken-1';
                     case 'grass':
+                        this.backgroundPoke='background.png'
                         return 'green darkeen-1';
                     case 'poison':
+                        this.backgroundPoke='background.png'
                         return 'deep-purple lighten-2'
                     case 'flying':
+                        this.backgroundPoke='backAire.png'
                         return 'blue lighten-3';
                     case 'bug':
+                        this.backgroundPoke='background.png'
                         return 'lime darken-1';
                     case 'electric':
+                        this.backgroundPoke='background.png'
                         return 'yellow darken-1';
                     case 'ground':
+                        this.backgroundPoke='backTierra.png'
                         return 'brown darken-2';
                     case 'fairy':
                         return 'pink lighten-3';
                     case 'psychic':
+                        this.backgroundPoke='backpsi.png';
                         return 'pink darken-1';
                     case 'fighting':
+                        this.backgroundPoke='backfight.png'
                         return 'orange darken-3';
+                    case 'dragon':
+                        return 'purple darken-3';
+                    case 'rock':
+                        this.backgroundPoke='backTierra.png'
+                        return 'brown lighten-3';
+                    case 'ice':
+                        this.backgroundPoke='backIce.png'
+                        return 'cyan accent-1';
+                    case 'dark':
+                        return 'grey darken-4';
+                    case 'steel':
+                        return 'grey darken-3';
+                    case 'ghost':
+                        this.backgroundPoke='backNight.png'
+                        return 'indigo darken-1';
                     default: 
                      return 'grey lighten-1';
                 }
