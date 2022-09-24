@@ -2,7 +2,7 @@
     <v-app>
         <h1>Pokedex</h1>
         <v-container>
-            <v-card>
+            <v-card color="menu">
                 <v-container>
                     <!--{{pokemons}}  Para mostrar todo los datos del json medainte el arreglo pokemons --> 
 
@@ -24,6 +24,7 @@
                                 close-delay="200"> 
                                 <!--Al hacer click en el v-card llama el dialogo showDescriptionPokemon-->
                             <v-card 
+                                color="menu2"
                                 :elevation="hover ? 12 : 2"
                                 @click="showPokemon(get_id(pokemon))"
                                 >
@@ -95,8 +96,21 @@
                             {{ getName(typePoke.type) }}
                         </v-chip>
                     </v-col>
+                    <v-col cols="30" class="justify-center">
+                        <v-chip
+                    v-for="stats in selectPokemon.stats"
+                    :key="stats.stat"
+                    
+                    class="mr-2"
+                    >
+
+                    {{ getName(stats.stat) + ": " + stats.base_stat }}
+                    </v-chip>
+
+                    </v-col>
                 </v-row>
                 <v-container >
+                    
                 <h2>Habilidades</h2>
 
                 
@@ -104,6 +118,7 @@
     <v-expansion-panel
     >
       <v-expansion-panel-header>
+          
         Movimientos
       </v-expansion-panel-header>
       <v-expansion-panel-content>
@@ -275,7 +290,7 @@ import axios from 'axios';
                         return 'indigo darken-1';
                     default: 
                      return 'grey lighten-1';
-                }
+                };
             },
             test(test){
                 console.log(test);

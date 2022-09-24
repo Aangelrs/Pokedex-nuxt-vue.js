@@ -5,6 +5,7 @@
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
+      color="menu"
       app
     >
       <v-list>
@@ -26,7 +27,7 @@
       </v-list>
     </v-navigation-drawer>
     <!--Barra de arriba-->
-    <v-app-bar :clipped-left="clipped" color="" app>
+    <v-app-bar :clipped-left="clipped" color="menu" app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
@@ -50,7 +51,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <v-footer :absolute="!fixed" color="menu" app>
       <span>&copy; {{ new Date().getFullYear() }} HuronCompany</span>
     </v-footer>
   </v-app>
@@ -67,13 +68,8 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Bienvenido',
           to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
         },
         {
           icon:'mdi-pokemon-go',
@@ -81,7 +77,7 @@ export default {
           to: '/pokedex',
         },
       ],
-      title: 'Inicio',
+      title: 'Bienvenido',
       miniVariant: false,
     }
   },
