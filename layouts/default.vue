@@ -20,7 +20,7 @@
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
-          <v-list-item-content >
+          <v-list-item-content>
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
@@ -33,7 +33,7 @@
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
       <v-toolbar-title>
-        {{title}}
+        {{ title }}
       </v-toolbar-title>
       <!--<v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
@@ -42,7 +42,7 @@
         <v-icon>mdi-minus</v-icon>
       </v-btn>-->
       <v-spacer />
-<!--<v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <!--<v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>-->
     </v-app-bar>
@@ -64,7 +64,7 @@ export default {
     return {
       clipped: true,
       drawer: true,
-      fixed: false,
+      fixed: true,
       items: [
         {
           icon: 'mdi-apps',
@@ -72,7 +72,7 @@ export default {
           to: '/',
         },
         {
-          icon:'mdi-pokemon-go',
+          icon: 'mdi-pokemon-go',
           title: 'Pokedex',
           to: '/pokedex',
         },
@@ -82,9 +82,9 @@ export default {
     }
   },
   methods: {
-    changeTitle(title){
+    changeTitle(title) {
       this.title = title
-    }
+    },
   },
 }
 </script>
